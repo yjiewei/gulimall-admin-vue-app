@@ -62,6 +62,7 @@
 
 <script>
 // 这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
+// eslint-disable-next-line no-irregular-whitespace
 // 例如：import 《组件名称》 from '《组件路径》';
 
 export default {
@@ -96,7 +97,7 @@ export default {
     }
   },
 
-  // 计算属性 类似于data概念
+  // 计算属性类似于data概念
   computed: {},
   // 监控data中的数据变化
   watch: {},
@@ -162,7 +163,7 @@ export default {
       // 1、当前节点最新的父节点id
       let pCid = 0
       let siblings = null
-      if (dropType == 'before' || dropType == 'after') {
+      if (dropType === 'before' || dropType === 'after') {
         pCid =
           dropNode.parent.data.catId == undefined
             ? 0
@@ -176,10 +177,10 @@ export default {
 
       // 2、当前拖拽节点的最新顺序，
       for (let i = 0; i < siblings.length; i++) {
-        if (siblings[i].data.catId == draggingNode.data.catId) {
+        if (siblings[i].data.catId === draggingNode.data.catId) {
           // 如果遍历的是当前正在拖拽的节点
           let catLevel = draggingNode.level
-          if (siblings[i].level != draggingNode.level) {
+          if (siblings[i].level !== draggingNode.level) {
             // 当前节点的层级发生变化
             catLevel = siblings[i].level
             // 修改他子节点的层级
@@ -223,7 +224,7 @@ export default {
       console.log('深度：', deep)
 
       //   this.maxLevel
-      if (type == 'inner') {
+      if (type === 'inner') {
         // console.log(
         //   `this.maxLevel：${this.maxLevel}；draggingNode.data.catLevel：${draggingNode.data.catLevel}；dropNode.level：${dropNode.level}`
         // );
@@ -248,6 +249,7 @@ export default {
       this.dialogType = 'edit'
       this.title = '修改分类'
       this.dialogVisible = true
+      this.category.catId = data.catId
 
       // 发送请求获取当前节点最新的数据
       this.$http({
@@ -256,19 +258,19 @@ export default {
       }).then(({ data }) => {
         // 请求成功
         console.log('要回显的数据', data)
-        this.category.name = data.data.name
-        this.category.catId = data.data.catId
-        this.category.icon = data.data.icon
-        this.category.productUnit = data.data.productUnit
-        this.category.parentCid = data.data.parentCid
-        this.category.catLevel = data.data.catLevel
-        this.category.sort = data.data.sort
-        this.category.showStatus = data.data.showStatus
+        this.category.name = data.category.name
+        this.category.catId = data.category.catId
+        this.category.icon = data.category.icon
+        this.category.productUnit = data.category.productUnit
+        this.category.parentCid = data.category.parentCid
+        this.category.catLevel = data.category.catLevel
+        this.category.sort = data.category.sort
+        this.category.showStatus = data.category.showStatus
         /**
          *         parentCid: 0,
-        catLevel: 0,
-        showStatus: 1,
-        sort: 0,
+         catLevel: 0,
+         showStatus: 1,
+         sort: 0,
          */
       })
     },
@@ -298,6 +300,7 @@ export default {
     // 修改三级分类数据
     editCategory () {
       var { catId, name, icon, productUnit } = this.category
+      console.log('传入的数据是：' + catId + ' ' + name)
       this.$http({
         url: this.$http.adornUrl('/product/category/update'),
         method: 'post',
@@ -364,20 +367,22 @@ export default {
       console.log('remove', node, data)
     }
   },
+  // eslint-disable-next-line no-irregular-whitespace
   // 生命周期 - 创建完成（可以访问当前this实例）
   created () {
     this.getMenus()
   },
+  // eslint-disable-next-line no-irregular-whitespace
   // 生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {},
-  beforeCreate () {}, // 生命周期 - 创建之前
-  beforeMount () {}, // 生命周期 - 挂载之前
-  beforeUpdate () {}, // 生命周期 - 更新之前
-  updated () {}, // 生命周期 - 更新之后
-  beforeDestroy () {}, // 生命周期 - 销毁之前
-  destroyed () {}, // 生命周期 - 销毁完成
+  beforeCreate () {}, // 生命周期创建之前
+  beforeMount () {}, // 生命周期挂载之前
+  beforeUpdate () {}, // 生命周期更新之前
+  updated () {}, // 生命周期更新之后
+  beforeDestroy () {}, // 生命周期销毁之前
+  destroyed () {}, // 生命周期销毁完成
   activated () {} // 如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
-<style scoped>
+<style scoped>
 </style>
